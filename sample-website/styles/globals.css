@@ -64,3 +64,56 @@
     animation: fade-in 0.3s ease-out;
   }
 }
+
+/* Reset some default styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Ensure flex works as expected */
+.max-w-5xl {
+  max-width: 80rem;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+/* Sidebar width */
+.w-80 {
+  width: 20rem;
+}
+
+/* Utility classes for padding, margin, background, etc. */
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.p-4 { padding: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.bg-gray-50 { background-color: #f9fafb; }
+.bg-white { background-color: #fff; }
+.rounded { border-radius: 0.5rem; }
+.shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+/* Typography */
+.text-2xl { font-size: 1.5rem; font-weight: bold; }
+.text-xl { font-size: 1.25rem; font-weight: 600; }
+.font-bold { font-weight: bold; }
+.font-semibold { font-weight: 600; }
+.text-center { text-align: center; }
