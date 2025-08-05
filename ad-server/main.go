@@ -35,6 +35,24 @@ const htmlTemplate = `
 </html>
 `
 
+const htmlTemplate2 = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Feed Response - Page2</title>
+</head>
+<body>
+	<div style="font-family: Arial, sans-serif; padding: 1em;">
+	<h2>Feed Page 2: {{.PageType}}</h2>
+	<p><strong>Time:</strong> {{.Time}}</p>
+	<p><strong>UUID:</strong> {{.UUID}}</p>
+	<p>This is a different dynamic HTML response for Page2.</p>
+	</div>
+</body>
+</html>
+`
+
 func statusHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if r.Method != http.MethodGet {
@@ -47,6 +65,25 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
+func transformPayloadToMap(payload RequestPayload) map[string]interface{} {
+	return map[string]interface{}{
+		"Time":     payload.Time,
+		"UUID":     payload.UUID,
+		"PageType": payload.PageType,
+	}
+}
+
+func getHTMLTemplate(pageType string) string {
+	switch pageType {
+	case "news-feed":
+		return htmlTemplate
+	case "sidebar-ad":
+		return htmlTemplate2
+	default:
+		return htmlTemplate
+	}
+}
+
 func getAd(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Only POST allowed", http.StatusMethodNotAllowed)
@@ -54,23 +91,35 @@ func getAd(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var payload RequestPayload
-	err := json.NewDecoder(r.Body).Decode(&payload)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 		http.Error(w, "Invalid JSON payload", http.StatusBadRequest)
 		return
 	}
 
-	tmpl, err := template.New("response").Parse(htmlTemplate)
+	params := transformPayloadToMap(payload)
+	tmpl, err := template.New("response").Parse(getHTMLTemplate(payload.PageType))
 	if err != nil {
 		http.Error(w, "Failed to parse template", http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	err = tmpl.Execute(w, payload)
-	if err != nil {
-		http.Error(w, "Failed to render HTML", http.StatusInternalServerError)
+	switch params["PageType"] {
+	case "news-feed":
+		if err := tmpl.Execute(w, params); err != nil {
+			http.Error(w, "Failed to render HTML for news-feed", http.StatusInternalServerError)
+		}
+	case "sidebar-ad":
+		// You can customize the response for sidebar-ad here
+		if err := tmpl.Execute(w, params); err != nil {
+			http.Error(w, "Failed to render HTML for sidebar-ad", http.StatusInternalServerError)
+		}
+	default:
+		http.Error(w, "Unknown PageType", http.StatusBadRequest)
 	}
+	log.Printf("Processed request for PageType: %s, UUID: %s", payload.PageType, payload.UUID)
+	log.Printf("Time: %s", payload.Time)
+	log.Printf("HTML response generated for PageType: %s", payload.PageType)
 }
 
 func main() {

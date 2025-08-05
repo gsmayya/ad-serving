@@ -58,16 +58,20 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="max-w-5xl mx-auto py-8 px-4 flex gap-8 items-start">
-      {/* Main Feed */}
-      <div className="flex-1 flex flex-col">
+    <div className="max-w-6xl mx-auto py-8 px-4 flex gap-8 items-start">
+      {/* News Feed - 70% width */}
+      <div className="basis-[70%] flex flex-col">
         <h1 className="text-2xl font-bold text-center mb-4">News Feed</h1>
-        {feedContent.map((html, idx) => (
-          <FeedItem key={idx} html={html} />
-        ))}
+        {feedContent.length === 0 ? (
+          <div className="text-center text-gray-500">Loading news...</div>
+        ) : (
+          feedContent.map((html, idx) => (
+            <FeedItem key={idx} html={html} />
+          ))
+        )}
       </div>
-      {/* Sidebar */}
-      <aside className="w-80 bg-gray-50 p-4 rounded shadow flex flex-col">
+      {/* Sidebar Ad - 30% width */}
+      <aside className="basis-[30%] bg-gray-50 p-4 rounded shadow flex flex-col min-h-[300px]">
         <h2 className="text-xl font-semibold mb-2">Sponsored</h2>
         {adContent ? <FeedItem html={adContent} /> : <div>Loading ad...</div>}
       </aside>
