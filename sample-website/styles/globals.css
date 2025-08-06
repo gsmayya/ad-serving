@@ -2,110 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .status-container {
-    @apply min-h-screen bg-gray-50 p-4 md:p-8;
-  }
-
-  .status-title {
-    @apply text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center;
-  }
-
-  .status-card {
-    @apply max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6 space-y-4;
-  }
-
-  .status-header {
-    @apply flex items-center justify-between p-4 rounded-lg;
-    background-color: rgba(243, 244, 246, 0.5);
-  }
-
-  .status-pill {
-    @apply px-3 py-1 rounded-full text-sm font-medium transition-colors;
-  }
-
-  .status-error {
-    @apply bg-red-50 text-red-700 p-4 rounded-lg mb-4 animate-fade-in;
-  }
-
-  .status-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
-  }
-
-  .status-item {
-    @apply p-4 bg-gray-50 rounded-lg;
-  }
-
-  .status-item h3 {
-    @apply text-sm font-medium text-gray-500 mb-1;
-  }
-
-  .status-refresh {
-    @apply text-right text-sm text-gray-500 mt-4 flex items-center justify-end gap-2;
-  }
-
-  .refresh-indicator {
-    @apply w-3 h-3 bg-green-500 rounded-full;
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
-  }
-
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-fade-in {
-    animation: fade-in 0.3s ease-out;
-  }
-}
-
-/* Reset some default styles */
-body, html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Ensure flex works as expected */
-.max-w-5xl {
-  max-width: 80rem;
-}
-
+/* Ensure column stacking for main layout */
 .flex {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .flex-1 {
   flex: 1 1 0%;
 }
 
-.gap-8 {
-  gap: 2rem;
-}
-
-.items-start {
-  align-items: flex-start;
-}
-
-/* Sidebar width */
-.w-80 {
-  width: 20rem;
-}
-
-/* Utility classes for padding, margin, background, etc. */
-.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
-.px-4 { padding-left: 1rem; padding-right: 1rem; }
+/* Utility classes for spacing and background */
 .p-4 { padding: 1rem; }
 .mb-4 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 0.5rem; }
-.mb-6 { margin-bottom: 1.5rem; }
 .bg-gray-50 { background-color: #f9fafb; }
 .bg-white { background-color: #fff; }
 .rounded { border-radius: 0.5rem; }
@@ -113,7 +22,4 @@ body, html {
 
 /* Typography */
 .text-2xl { font-size: 1.5rem; font-weight: bold; }
-.text-xl { font-size: 1.25rem; font-weight: 600; }
-.font-bold { font-weight: bold; }
-.font-semibold { font-weight: 600; }
 .text-center { text-align: center; }
